@@ -1,0 +1,26 @@
+{
+  "name": "vue-websocket",
+  "version": "1.0.0",
+  "description": "Native Websocket Plugin for Vue 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deko96/vue-websocket.git"
+  },
+  "keywords": [
+    "websocket",
+    "socket",
+    "vue",
+    "vue2",
+    "vuejs"
+  ],
+  "author": "Dejan Bozhinoski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deko96/vue-websocket/issues"
+  },
+  "homepage": "https://github.com/deko96/vue-websocket#readme"
+}
