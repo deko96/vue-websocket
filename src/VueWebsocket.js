@@ -1,6 +1,5 @@
 import config from './config';
 import core from './core';
-import EventEmitter from './EventEmmiter';
 
 export default class VueWebSocket {
     constructor(options) {
@@ -9,7 +8,6 @@ export default class VueWebSocket {
         }
         core.self = this;
         this.options = Object.assign(config, options);
-        this.emitter = new EventEmitter();
         this.socket = null;
         this.connected = null;
         this.handlers = {};
@@ -119,7 +117,6 @@ export default class VueWebSocket {
         this.connected = Date.now();
         this.reconnectAttempts = 0;
         if (this.options.monitor) core.pingInterval = setInterval(this._ping.bind(this), this.monitorInterval);
-        this.emitter.emit('open', event);
         if (this.handlers['open']) this.handlers['open'](event);
     }
 
@@ -127,7 +124,6 @@ export default class VueWebSocket {
         if (this.options.debug) {
             console.error('[VueWebSocket] WebSocket Error!', event);
         }
-        this.emitter.emit('error', event);
         if (this.handlers['error']) this.handlers['error'](event);
     }
 
@@ -142,7 +138,6 @@ export default class VueWebSocket {
             console.log('[VueWebSocket] ws-in <<< %s', data.event, data.data);
         }
         this._pong();
-        this.emitter.emit(data.event, data.data);
         if (this.handlers[data.event]) this.handlers[data.event](data.data);
     }
 
@@ -162,7 +157,6 @@ export default class VueWebSocket {
                     self.open();
                 }
             }
-            self.emitter.emit('close', event);
             if (self.handlers['close']) self.handlers['close'](event);
         }
     }
@@ -193,8 +187,6 @@ export default class VueWebSocket {
             open: this.open,
             close: this.close,
             send: this.send,
-            on: this.emitter.on,
-            once: this.emitter.once,
             setUrl: this.setUrl
         }
     }
