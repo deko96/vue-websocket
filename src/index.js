@@ -4,6 +4,8 @@ export default {
     install(Vue, options) {
         let socket = new VueWebSocket(options);
 
+        Vue.prototype.$socket = socket.proto;
+
         Vue.mixin({
             beforeCreate: function () {
                 let handlers = this.$options["websocket"];
