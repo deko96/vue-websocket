@@ -10,7 +10,7 @@ export default class VueWebSocket {
         this.options = Object.assign(config, options);
         this.socket = null;
         this.connected = null;
-        this.handlers = {};
+        this.handlers = new Map();
         this.reconnectAttempts = 0;
         if (this.options.autoConnect) this.open();
     }
@@ -41,16 +41,16 @@ export default class VueWebSocket {
 
 
     send(event, data) {
-        if (!this.connected) {
-            if (this.options.debug) {
+        if (!core.self.connected) {
+            if (core.self.options.debug) {
                 console.log('[VueWebSocket] Cannot send message while the WebSocket is not connected.')
             }
             return;
         }
-        if (this.options.debug) {
+        if (core.self.options.debug) {
             console.log('[VueWebSocket] ws-out >>> %s', event, data);
         }
-        this.socket.send(
+        core.self.socket.send(
             JSON.stringify(
                 {
                     event: event,
@@ -117,14 +117,14 @@ export default class VueWebSocket {
         this.connected = Date.now();
         this.reconnectAttempts = 0;
         if (this.options.monitor) core.pingInterval = setInterval(this._ping.bind(this), this.monitorInterval);
-        if (this.handlers['open']) this.handlers['open'](event);
+        if (this.handlers.has('open')) this.handlers.get('open').forEach(cb => cb(event))
     }
 
     _onError(event) {
         if (this.options.debug) {
             console.error('[VueWebSocket] WebSocket Error!', event);
         }
-        if (this.handlers['error']) this.handlers['error'](event);
+        if (this.handlers.has('error')) this.handlers.get('error').forEach(cb => cb(event))
     }
 
     _onData({ data }) {
@@ -138,7 +138,7 @@ export default class VueWebSocket {
             console.log('[VueWebSocket] ws-in <<< %s', data.event, data.data);
         }
         this._pong();
-        if (this.handlers[data.event]) this.handlers[data.event](data.data);
+        if (this.handlers.has(data.event)) this.handlers.get(data.event).forEach(cb => cb(data.data))
     }
 
     _onClose(event) {
@@ -157,7 +157,7 @@ export default class VueWebSocket {
                     self.open();
                 }
             }
-            if (self.handlers['close']) self.handlers['close'](event);
+            if (this.handlers.has('close')) this.handlers.get('close').forEach(cb => cb(event))
         }
     }
 
