@@ -10,7 +10,7 @@ export default {
             beforeCreate: function () {
                 let handlers = this.$options["websocket"];
                 if (handlers) {
-                    Object.keys(handlers).forEach(event => socket.handlers[event] = handlers[event]);
+                    Object.keys(handlers).forEach(event => socket.handlers[event] = handlers[event].bind(this));
                 }
             }
         });
