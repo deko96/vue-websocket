@@ -157,7 +157,7 @@ export default class VueWebSocket {
                     self.open();
                 }
             }
-            if (this.handlers.has('close')) this.handlers.get('close').forEach(cb => cb(event))
+            if (self.handlers.has('close')) self.handlers.get('close').forEach(cb => cb(event))
         }
     }
 
