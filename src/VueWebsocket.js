@@ -162,8 +162,12 @@ export default class VueWebSocket {
     }
 
     _parseUrl(url, qs = null) {
-        let wsCheck = url.indexOf('ws://') === -1;
-        if (wsCheck) url = ['ws', url].join('://');
+        let wsCheck = url.indexOf('ws://') === -1 && url.indexOf('wss://') === -1;
+        if (wsCheck) { 
+            let protocol = 'ws'
+            if (window.location.protocol.indexOf('https') > -1) protocol = 'wss'
+            url = [protocol, url].join('://');
+        }
         if (qs) qs = new URLSearchParams(qs).toString();
         return qs ? [url, qs].join('?') : url;
     }
