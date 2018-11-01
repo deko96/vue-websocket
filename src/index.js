@@ -12,12 +12,15 @@ export default {
                 if (handlers) {
                     Object.keys(handlers).forEach(event => {
                         let handler = handlers[event].bind(this)
-                        if (socket.handlers.has(event)) {
-                            socket.handlers.get(event).push(handler)
-                        } else {
-                            socket.handlers.set(event, [ handler ])
-                        }
+                        if (!socket.handlers.has(event)) socket.handlers.set(event, new Map())
+                        socket.handlers.get(event).set(this._uid, handler)
                     });
+                }
+            },
+            beforeDestroy: function() {
+                let handlers = socket.handlers.entries();
+                for (var [event, map] of handlers) {
+                    map.delete(this._uid)
                 }
             }
         });

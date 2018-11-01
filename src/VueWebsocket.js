@@ -117,14 +117,14 @@ export default class VueWebSocket {
         this.connected = Date.now();
         this.reconnectAttempts = 0;
         if (this.options.monitor) core.pingInterval = setInterval(this._ping.bind(this), this.monitorInterval);
-        if (this.handlers.has('open')) this.handlers.get('open').forEach(cb => cb(event))
+        this._trigger('open', event)
     }
 
     _onError(event) {
         if (this.options.debug) {
             console.error('[VueWebSocket] WebSocket Error!', event);
         }
-        if (this.handlers.has('error')) this.handlers.get('error').forEach(cb => cb(event))
+        this._trigger('error', event)
     }
 
     _onData({ data }) {
@@ -138,7 +138,7 @@ export default class VueWebSocket {
             console.log('[VueWebSocket] ws-in <<< %s', data.event, data.data);
         }
         this._pong();
-        if (this.handlers.has(data.event)) this.handlers.get(data.event).forEach(cb => cb(data.data))
+        this._trigger(data.event, data.data)
     }
 
     _onClose(event) {
@@ -157,7 +157,7 @@ export default class VueWebSocket {
                     self.open();
                 }
             }
-            if (self.handlers.has('close')) self.handlers.get('close').forEach(cb => cb(event))
+            this._trigger('open', event)
         }
     }
 
@@ -170,6 +170,14 @@ export default class VueWebSocket {
         }
         if (qs) qs = new URLSearchParams(qs).toString();
         return qs ? [url, qs].join('?') : url;
+    }
+
+    _trigger(event, data) {
+        if(this.handlers.has(event)) {
+            for(var [uuid, cb] of this.handlers.get(event).entries()) {
+                cb(data)
+            }
+        }
     }
 
     get monitorInterval() {

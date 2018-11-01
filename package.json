@@ -1,13 +1,44 @@
 {
-  "name": "vue-websocket",
-  "version": "0.1.2",
-  "description": "Websocket handler for Vue.js",
-  "homepage": "https://github.com/deko96/vue-websocket",
-  "main": "src/index.js",
-  "scripts": {
-    "_prebuild": "npm run test",
-    "build": "webpack --progress --config webpack.build.config.js"
+  "_args": [
+    [
+      "github:deko96/vue-websocket",
+      "/home/deko96/Documents/Projects/traksi-stats-vue"
+    ]
+  ],
+  "_from": "github:deko96/vue-websocket",
+  "_id": "vue-websocket@github:deko96/vue-websocket#7290baca2b11ac9e06a7471b00043ea3ba135574",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/vue-websocket",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "github:deko96/vue-websocket",
+    "rawSpec": "github:deko96/vue-websocket",
+    "saveSpec": "github:deko96/vue-websocket",
+    "fetchSpec": null,
+    "gitCommittish": null
   },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "github:deko96/vue-websocket#7290baca2b11ac9e06a7471b00043ea3ba135574",
+  "_spec": "github:deko96/vue-websocket",
+  "_where": "/home/deko96/Documents/Projects/traksi-stats-vue",
+  "author": {
+    "name": "deko96"
+  },
+  "bugs": {
+    "url": "https://github.com/deko96/vue-websocket/issues"
+  },
+  "dependencies": {},
+  "description": "Websocket handler for Vue.js",
+  "devDependencies": {},
+  "files": [
+    "dist",
+    "src"
+  ],
+  "homepage": "https://github.com/deko96/vue-websocket",
   "keywords": [
     "vue2",
     "websocket",
@@ -15,16 +46,16 @@
     "native-socket",
     "native-websocket"
   ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "name": "vue-websocket",
   "repository": {
     "type": "git",
-    "url": "https://github.com/deko96/vue-websocket.git"
+    "url": "git+https://github.com/deko96/vue-websocket.git"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
-  "author": "deko96",
-  "license": "MIT",
-  "devDependencies": {},
-  "dependencies": {}
+  "scripts": {
+    "_prebuild": "npm run test",
+    "build": "webpack --progress --config webpack.build.config.js"
+  },
+  "version": "0.1.2"
 }
