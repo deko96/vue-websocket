@@ -157,7 +157,7 @@ export default class VueWebSocket {
                     self.open();
                 }
             }
-            this._trigger('open', event)
+            self._trigger('close', event)
         }
     }
 
